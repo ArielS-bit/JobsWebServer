@@ -23,4 +23,9 @@
     <ProjectReference Include="..\JobsWebServerBL\JobsWebServerBL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTO\" />
+    <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
 </Project>

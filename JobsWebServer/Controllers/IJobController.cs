@@ -18,11 +18,14 @@ namespace JobsWebServer.Controllers
     {
         //Connection to the DB Context via dependency injection
         IJobDBContext context;
+        public IJobController(IJobDBContext context)
+        {
+            this.context = context;
+        }
 
 
-        
 
-        
+
         [Route("/HelloWorld")]
         [HttpGet]
         public string BasicFunc()
