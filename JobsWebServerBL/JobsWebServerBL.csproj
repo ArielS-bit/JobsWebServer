@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ModelsBL\" />
     <Folder Include="Models\" />
   </ItemGroup>
 
