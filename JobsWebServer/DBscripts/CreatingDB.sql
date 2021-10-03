@@ -35,6 +35,9 @@
 
 --SELECT * FROM Users
 
+
+--Finished DB
+
 USE master
 
 CREATE DATABASE IJobDB 
