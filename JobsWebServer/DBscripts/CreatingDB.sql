@@ -35,16 +35,13 @@
 
 --SELECT * FROM Users
 
-
-
-
 USE master
 
 CREATE DATABASE IJobDB 
 
 GO
 
-USE master
+USE master	
 
 USE IJobDB
 
@@ -157,7 +154,7 @@ CREATE TABLE JobApplication(
     AppID INT PRIMARY KEY IDENTITY(1000,1) NOT NULL ,
     EmployeeID INT NOT NULL,
     JobOfferID INT NOT NULL,
-    AppStatus bit NOT NULL,
+    AppStatus int NOT NULL,
     EmployerID INT NOT NULL
 );
 
@@ -207,6 +204,6 @@ ALTER TABLE
 ALTER TABLE
     JobApplication ADD CONSTRAINT jobapplication_employerid_foreign FOREIGN KEY(EmployerID) REFERENCES Employer(EmployerID);
 ALTER TABLE
-    JobApplication ADD CONSTRAINT jobapplication_status_foreign FOREIGN KEY(Status) REFERENCES ApplicationStatus(StatusID);
+    JobApplication ADD CONSTRAINT jobapplication_appstatus_foreign FOREIGN KEY(AppStatus) REFERENCES JobApplicationStatus(StatusID);
 ALTER TABLE
     JobOffer ADD CONSTRAINT joboffer_jobofferstatusid_foreign FOREIGN KEY(JobOfferStatusID) REFERENCES JobOfferStatus(JobOfferStatusID);
