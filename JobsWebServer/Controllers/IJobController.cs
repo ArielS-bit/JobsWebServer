@@ -33,12 +33,14 @@ namespace JobsWebServer.Controllers
             return "Hello World!!";
         }
 
+
         [Route("/Lucas")]
         [HttpGet]
         public string Lucas()
         {
             return "It's Lucas here!";
         }
+
 
         [Route("/Time")]
         [HttpGet]
