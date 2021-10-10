@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobsWebServer", "JobsWebServer\JobsWebServer.csproj", "{E073627E-E526-4519-8C45-903D2B3F4A58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobsWebServerBL", "JobsWebServerBL\JobsWebServerBL.csproj", "{FA184089-FEF2-4FBF-8BFD-EBBD1E96A19F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobsWebServerBL", "JobsWebServerBL\JobsWebServerBL.csproj", "{FA184089-FEF2-4FBF-8BFD-EBBD1E96A19F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,41 +1,3 @@
---Use master
-
---Create Database IJobDB
-
---Go
-
-----Creating dummy table and insertion
-
---Use IJobDB
-
---Go
-
---Create Table Users (
-
---ID int Identity primary key,
-
---Email nvarchar(100) not null,
-
---FirstName nvarchar(30) not null,
-
---LastName nvarchar(30) not null,
-
---UserPswd nvarchar(30) not null,
-
---CONSTRAINT UC_Email UNIQUE(Email)
-
---)
-
---Go
-
---INSERT INTO Users VALUES
---('kuku@kuku.com','kuku','kaka','1234');
-
---GO
-
---SELECT * FROM Users
-
-
 --Finished DB
 
 USE master
@@ -122,8 +84,9 @@ CREATE UNIQUE INDEX JobOfferIDIndex
 on Comment (JobOfferID);
 
 CREATE TABLE Rating(
-    ID INT PRIMARY KEY IDENTITY(1000,1) NOT NULL ,
-    Rating INT NOT NULL
+    ID INT PRIMARY KEY IDENTITY(1000,1) NOT NULL,
+    RatingID INT NOT NULL,
+	RatingName VARCHAR(255)
 );
 
 CREATE TABLE JobRequest(
@@ -210,3 +173,51 @@ ALTER TABLE
     JobApplication ADD CONSTRAINT jobapplication_appstatus_foreign FOREIGN KEY(AppStatus) REFERENCES JobApplicationStatus(StatusID);
 ALTER TABLE
     JobOffer ADD CONSTRAINT joboffer_jobofferstatusid_foreign FOREIGN KEY(JobOfferStatusID) REFERENCES JobOfferStatus(JobOfferStatusID);
+
+
+    USE [IJobDB]
+GO
+
+INSERT INTO [dbo].[Rating]
+           ([RatingID]
+           ,[RatingName])
+     VALUES
+           (1,
+		   'Bad')
+GO
+
+INSERT INTO [dbo].[Rating]
+           ([RatingID]
+           ,[RatingName])
+     VALUES
+           (2,
+		   'Not bad')
+GO
+
+
+INSERT INTO [dbo].[Rating]
+           ([RatingID]
+           ,[RatingName])
+     VALUES
+           (3,
+		   'Good')
+GO
+
+INSERT INTO [dbo].[Rating]
+           ([RatingID]
+           ,[RatingName])
+     VALUES
+           (4,
+		   'Very good')
+GO
+
+
+INSERT INTO [dbo].[Rating]
+           ([RatingID]
+           ,[RatingName])
+     VALUES
+           (5,
+		   'Excellent')
+GO
+
+
