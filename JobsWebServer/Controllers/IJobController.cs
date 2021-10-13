@@ -26,7 +26,7 @@ namespace JobsWebServer.Controllers
 
 
 
-        [Route("/HelloWorld")]
+        [Route("HelloWorld")]
         [HttpGet]
         public string BasicFunc()
         {
@@ -34,7 +34,7 @@ namespace JobsWebServer.Controllers
         }
 
 
-        [Route("/Lucas")]
+        [Route("Lucas")]
         [HttpGet]
         public string Lucas()
         {
@@ -42,7 +42,7 @@ namespace JobsWebServer.Controllers
         }
 
 
-        [Route("/Time")]
+        [Route("Time")]
         [HttpGet]
         public DateTime GetTime()
         {
