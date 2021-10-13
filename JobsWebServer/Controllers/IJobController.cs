@@ -44,9 +44,10 @@ namespace JobsWebServer.Controllers
 
         [Route("Time")]
         [HttpGet]
-        public DateTime GetTime()
+        public string GetTime()
         {
-            return DateTime.Now;
+           
+            return DateTime.Now.ToString("MM/dd/yyyy HH:mm");
 
         }
 
