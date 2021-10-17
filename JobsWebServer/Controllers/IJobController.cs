@@ -49,7 +49,7 @@ namespace JobsWebServer.Controllers
         public string GetTime()
         {
            
-            return DateTime.Now.ToString("MM/dd/yyyy HH:mm");
+            return DateTime.Now.ToString("dd/MM/yyyy HH:mm");
 
         }
 
