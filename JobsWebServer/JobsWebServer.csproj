@@ -20,12 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JobsWebServerBL\JobsWebServerBL.csproj" />
+    <Folder Include="DTO\" />
+    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\" />
-    <Folder Include="wwwroot\Images\" />
+    <ProjectReference Include="..\JobsWebServerBL\JobsWebServerBL.csproj" />
   </ItemGroup>
 
 </Project>

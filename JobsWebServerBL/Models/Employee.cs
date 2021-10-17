@@ -21,6 +21,7 @@ namespace JobsWebServerBL.Models
         public string Gender { get; set; }
         public string Email { get; set; }
         public int RatingId { get; set; }
+        public string Pass { get; set; }
 
         public virtual Rating Rating { get; set; }
         public virtual ICollection<JobApplication> JobApplications { get; set; }

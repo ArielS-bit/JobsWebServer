@@ -54,7 +54,7 @@ namespace JobsWebServerBL.Models
             modelBuilder.Entity<ChatBox>(entity =>
             {
                 entity.HasKey(e => e.PhraseId)
-                    .HasName("PK__ChatBox__0DBA0EA29530747E");
+                    .HasName("PK__ChatBox__0DBA0EA2ABBEA830");
 
                 entity.ToTable("ChatBox");
 
@@ -119,6 +119,11 @@ namespace JobsWebServerBL.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Pass)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.RatingId).HasColumnName("RatingID");
 
                 entity.HasOne(d => d.Rating)
@@ -166,6 +171,11 @@ namespace JobsWebServerBL.Models
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Pass)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<InterstedInRequest>(entity =>
@@ -188,7 +198,7 @@ namespace JobsWebServerBL.Models
             modelBuilder.Entity<JobApplication>(entity =>
             {
                 entity.HasKey(e => e.AppId)
-                    .HasName("PK__JobAppli__8E2CF7D9A8CAEE28");
+                    .HasName("PK__JobAppli__8E2CF7D902688066");
 
                 entity.ToTable("JobApplication");
 
@@ -231,7 +241,7 @@ namespace JobsWebServerBL.Models
             modelBuilder.Entity<JobApplicationStatus>(entity =>
             {
                 entity.HasKey(e => e.StatusId)
-                    .HasName("PK__JobAppli__C8EE2043D564C258");
+                    .HasName("PK__JobAppli__C8EE20432C476996");
 
                 entity.ToTable("JobApplicationStatus");
 
@@ -366,7 +376,11 @@ namespace JobsWebServerBL.Models
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.Rating1).HasColumnName("Rating");
+                entity.Property(e => e.RatingId).HasColumnName("RatingID");
+
+                entity.Property(e => e.RatingName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
             });
 
             OnModelCreatingPartial(modelBuilder);

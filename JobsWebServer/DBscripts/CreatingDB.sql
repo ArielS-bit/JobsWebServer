@@ -21,7 +21,8 @@ CREATE TABLE Employee(
     Birthday DATE NOT NULL,
     Gender VARCHAR(255) NOT NULL,
     Email VARCHAR(255) NOT NULL,
-    RatingID INT NOT NULL
+    RatingID INT NOT NULL,
+	Pass VARCHAR(255) NOT NULL
 );
 
 CREATE UNIQUE INDEX EmailIndex
@@ -40,7 +41,8 @@ CREATE TABLE Employer(
     IsEmployee bit NOT NULL,
     Gender VARCHAR(255) NOT NULL,
     Email VARCHAR(255) NOT NULL,
-    IsAdmin bit NOT NULL
+    IsAdmin bit NOT NULL,
+	Pass VARCHAR(255) NOT NULL
 );
 
 CREATE UNIQUE INDEX LastNameIndex

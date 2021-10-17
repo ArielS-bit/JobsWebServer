@@ -22,6 +22,7 @@ namespace JobsWebServerBL.Models
         public string Gender { get; set; }
         public string Email { get; set; }
         public bool IsAdmin { get; set; }
+        public string Pass { get; set; }
 
         public virtual ICollection<JobApplication> JobApplications { get; set; }
         public virtual ICollection<JobOffer> JobOffers { get; set; }
