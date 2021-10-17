@@ -54,29 +54,29 @@ namespace JobsWebServer.Controllers
         }
 
 
-        //[Route("Login")]
-        //[HttpGet]
-        //public Employee Login([FromQuery] string email, [FromQuery] string pass)
-        //{
-        //    Employee emp = context.Login(email, pass);
+        [Route("Login")]
+        [HttpGet]
+        public Employee Login([FromQuery] string email, [FromQuery] string pass)
+        {
+            Employee emp = context.Login(email, pass);
 
-        //    //Check user name and password
-        //    if (emp != null)
-        //    {
-        //        HttpContext.Session.SetObject("theUser", emp);
+            //Check user name and password
+            if (emp != null)
+            {
+                HttpContext.Session.SetObject("theUser", emp);
 
-        //        Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
 
-        //        //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
-        //        return emp;
-        //    }
-        //    else
-        //    {
+                //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                return emp;
+            }
+            else
+            {
 
-        //        Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
-        //        return null;
-        //    }
-        //}
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return null;
+            }
+        }
 
         //[Route("UpdateContact")]
         //[HttpPost]
