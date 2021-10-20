@@ -56,19 +56,19 @@ namespace JobsWebServer.Controllers
 
         [Route("Login")]
         [HttpGet]
-        public Employee Login([FromQuery] string email, [FromQuery] string pass)
+        public User Login([FromQuery] string email, [FromQuery] string pass)
         {
-            Employee emp = context.Login(email, pass);
+            User user = context.Login(email, pass);
 
             //Check user name and password
-            if (emp != null)
+            if (user != null)
             {
-                HttpContext.Session.SetObject("theUser", emp);
+                HttpContext.Session.SetObject("theUser", user);
 
                 Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
 
                 //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
-                return emp;
+                return user;
             }
             else
             {
@@ -77,6 +77,9 @@ namespace JobsWebServer.Controllers
                 return null;
             }
         }
+
+
+       
 
         //[Route("UpdateContact")]
         //[HttpPost]

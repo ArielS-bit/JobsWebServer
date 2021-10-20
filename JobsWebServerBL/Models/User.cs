@@ -10,7 +10,7 @@ namespace JobsWebServerBL.Models
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public int LastName { get; set; }
-        public int Email { get; set; }
+        public string Email { get; set; }
         public string Pass { get; set; }
         public int Nickname { get; set; }
         public int Birthday { get; set; }

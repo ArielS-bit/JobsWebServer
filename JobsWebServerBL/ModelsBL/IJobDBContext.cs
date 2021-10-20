@@ -11,11 +11,11 @@ namespace JobsWebServerBL.Models
 {
     public partial class IJobDBContext : DbContext
     {
-        public Employee Login(string email, string pswd)
+        public User Login(string email, string pswd)
         {
+            User user = this.Users.Where(u => u.Email == email && u.Pass == pswd).FirstOrDefault();
 
-            Employee emp = this.Employees.Where(u => u.Email == email && u.Pass == pswd).FirstOrDefault();
-            return emp;
+            return user;
         }
     }
 }
