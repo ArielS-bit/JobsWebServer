@@ -12,47 +12,29 @@ USE IJobDB
 
 Go
 
-CREATE TABLE Employee(
+
+CREATE TABLE Employees(
     EmployeeID INT PRIMARY KEY IDENTITY(1000,1) NOT NULL ,
-    FirstName VARCHAR(255) NOT NULL,
-    LastName VARCHAR(255) NOT NULL,
-    Nickname VARCHAR(255) NOT NULL,
+    UserID INT NOT NULL,
     Employeed bit NOT NULL,
-    Birthday DATE NOT NULL,
-    Gender VARCHAR(255) NOT NULL,
-    Email VARCHAR(255) NOT NULL,
-    RatingID INT NOT NULL,
-	Pass VARCHAR(255) NOT NULL
+    RatingID INT NOT NULL
 );
 
-CREATE UNIQUE INDEX EmailIndex
-on Employee (Email);
-
-CREATE UNIQUE INDEX LastNameIndex
-on Employee (LastName);
+CREATE UNIQUE INDEX UserIDIndex
+on Employees (UserID);
 
 
-CREATE TABLE Employer(
-    EmployerID INT PRIMARY KEY IDENTITY(1000,1) NOT NULL ,
-    FirstName VARCHAR(255) NOT NULL,
-    LastName VARCHAR(255) NOT NULL,
-    Nickname VARCHAR(255) NOT NULL,
-    Birthday DATE NOT NULL,
-    IsEmployee bit NOT NULL,
-    Gender VARCHAR(255) NOT NULL,
-    Email VARCHAR(255) NOT NULL,
-    IsAdmin bit NOT NULL,
-	Pass VARCHAR(255) NOT NULL
+CREATE TABLE Employers(
+    EmployerID INT PRIMARY KEY NOT NULL ,
+    UserID INT NOT NULL,
+    IsEmployee bit NOT NULL
 );
 
-CREATE UNIQUE INDEX LastNameIndex
-on Employer (LastName);
+CREATE UNIQUE INDEX UserIDIndex
+on Employers (UserID);
 
-CREATE UNIQUE INDEX EmailIndex
-on Employer (Email);
-
-CREATE TABLE JobOffer(
-    JobOfferID INT PRIMARY KEY IDENTITY(100,2) NOT NULL ,
+CREATE TABLE JobOffers(
+    JobOfferID INT PRIMARY KEY NOT NULL ,
     CategoryID INT NOT NULL,
     EmployerID INT NOT NULL,
     Applied bit NOT NULL,
@@ -64,7 +46,10 @@ CREATE TABLE JobOffer(
 );
 
 CREATE UNIQUE INDEX JobOfferStatusIDIndex
-on JobOffer (JobOfferStatusID);
+on JobOffers (JobOfferStatusID);
+
+CREATE UNIQUE INDEX EmployerIDIndex
+on JobOffers (EmployerID);
 
 CREATE TABLE Categories(
     CategoryID INT PRIMARY KEY IDENTITY(1,1) NOT NULL ,
@@ -74,25 +59,24 @@ CREATE TABLE Categories(
 CREATE UNIQUE INDEX CategoryNameIndex
 on Categories (CategoryName);
 
-CREATE TABLE Comment(
-    CommentID INT PRIMARY KEY IDENTITY(500,1) NOT NULL ,
+CREATE TABLE Comments(
+    CommentID INT PRIMARY KEY IDENTITY(10000,1) NOT NULL ,
     Content INT NOT NULL,
     JobOfferID INT NOT NULL,
     JobRequestID INT NOT NULL,
-    LikeAmount INT NOT NULL
+    Likes INT NOT NULL
 );
 
 CREATE UNIQUE INDEX JobOfferIDIndex
-on Comment (JobOfferID);
+on Comments (JobOfferID);
 
 CREATE TABLE Rating(
-    ID INT PRIMARY KEY IDENTITY(1000,1) NOT NULL,
-    RatingID INT NOT NULL,
-	RatingName VARCHAR(255)
+    RatingID INT PRIMARY KEY IDENTITY(1,1) NOT NULL ,
+    Rating INT NOT NULL
 );
 
-CREATE TABLE JobRequest(
-    JobRequestID INT PRIMARY KEY IDENTITY(100,1) NOT NULL ,
+CREATE TABLE JobRequests(
+    JobRequestID INT PRIMARY KEY IDENTITY(10000,1) NOT NULL ,
     Topic VARCHAR(255) NOT NULL,
     Content VARCHAR(255) NOT NULL,
     IsApplied bit NOT NULL,
@@ -104,11 +88,10 @@ CREATE TABLE JobRequest(
 );
 
 CREATE UNIQUE INDEX EmployeeIDIndex
-on JobRequest (EmployeeID);
-
+on JobRequests (EmployeeID);
 
 CREATE TABLE ChatBox(
-    PhraseID INT PRIMARY KEY IDENTITY(50,1) NOT NULL,
+    PhraseID INT PRIMARY KEY IDENTITY(10,1) NOT NULL,
     Content VARCHAR(255) NOT NULL
 );
 
@@ -118,108 +101,127 @@ CREATE TABLE InterstedInRequest(
     EmployerID INT NOT NULL
 );
 
-CREATE TABLE JobApplication(
-    AppID INT PRIMARY KEY IDENTITY(1000,1) NOT NULL ,
+CREATE TABLE JobApplications(
+    AppID INT PRIMARY KEY IDENTITY(100000,1) NOT NULL ,
     EmployeeID INT NOT NULL,
     JobOfferID INT NOT NULL,
-    AppStatus int NOT NULL,
+    JobAppStatus INT NOT NULL,
     EmployerID INT NOT NULL
 );
 
 CREATE UNIQUE INDEX AppStatusIndex
-on JobApplication (AppStatus);
-
+on JobApplications (JobAppStatus);
 
 CREATE TABLE JobApplicationStatus(
-    StatusID INT PRIMARY KEY IDENTITY(1000,1) NOT NULL ,
+    StatusID INT PRIMARY KEY IDENTITY(1,1) NOT NULL ,
     StatusName VARCHAR(255) NOT NULL
 );
 
 CREATE UNIQUE INDEX StatusNameIndex
 on JobApplicationStatus (StatusName);
 
+
 CREATE TABLE JobOfferStatus(
-    JobOfferStatusID INT PRIMARY KEY IDENTITY(1000,1) NOT NULL ,
+    JobOfferStatusID INT PRIMARY KEY IDENTITY(1,1) NOT NULL ,
     JobOfferStatus VARCHAR(255) NOT NULL
 );
 
 CREATE UNIQUE INDEX JobOfferStatusIndex
 on JobOfferStatus (JobOfferStatus);
 
+CREATE TABLE Users(
+    UserID INT PRIMARY KEY IDENTITY(100000,1) NOT NULL,
+    FirstName VARCHAR(255) NOT NULL,
+    LastName INT NOT NULL,
+    Email INT NOT NULL,
+    Pass VARCHAR(255) NOT NULL,
+    Nickname INT NOT NULL,
+    Birthday INT NOT NULL,
+    Gender INT NOT NULL,
+    UserTypeID INT NOT NULL
+);
+
+CREATE UNIQUE INDEX LastNameIndex
+on Users (LastName);
+
+CREATE UNIQUE INDEX EmailIndex
+on Users (Email);
+
+CREATE TABLE UserTypes(
+    UserTypeID INT PRIMARY KEY IDENTITY(1,1) NOT NULL ,
+    UserTypeName VARCHAR(255) NOT NULL
+);
 
 USE IJobDB
 
 ALTER TABLE
-    JobApplication ADD CONSTRAINT jobapplication_employeeid_foreign FOREIGN KEY(EmployeeID) REFERENCES Employee(EmployeeID);
+    JobApplications ADD CONSTRAINT jobapplications_employeeid_foreign FOREIGN KEY(EmployeeID) REFERENCES Employees(EmployeeID);
 ALTER TABLE
-    Employee ADD CONSTRAINT employee_ratingid_foreign FOREIGN KEY(RatingID) REFERENCES Rating(ID);
+    Employees ADD CONSTRAINT employees_ratingid_foreign FOREIGN KEY(RatingID) REFERENCES Rating(RatingID);
 ALTER TABLE
-    JobApplication ADD CONSTRAINT jobapplication_jobofferid_foreign FOREIGN KEY(JobOfferID) REFERENCES JobOffer(JobOfferID);
+    JobApplications ADD CONSTRAINT jobapplications_jobofferid_foreign FOREIGN KEY(JobOfferID) REFERENCES JobOffers(JobOfferID);
 ALTER TABLE
-    JobOffer ADD CONSTRAINT joboffer_employerid_foreign FOREIGN KEY(EmployerID) REFERENCES Employer(EmployerID);
+    JobOffers ADD CONSTRAINT joboffers_employerid_foreign FOREIGN KEY(EmployerID) REFERENCES Employers(EmployerID);
 ALTER TABLE
-    JobOffer ADD CONSTRAINT joboffer_commentid_foreign FOREIGN KEY(CommentID) REFERENCES Comment(CommentID);
+    JobOffers ADD CONSTRAINT joboffers_commentid_foreign FOREIGN KEY(CommentID) REFERENCES Comments(CommentID);
 ALTER TABLE
-    JobOffer ADD CONSTRAINT joboffer_categoryid_foreign FOREIGN KEY(CategoryID) REFERENCES Categories(CategoryID);
+    JobOffers ADD CONSTRAINT joboffers_categoryid_foreign FOREIGN KEY(CategoryID) REFERENCES Categories(CategoryID);
 ALTER TABLE
-    JobRequest ADD CONSTRAINT jobrequest_categoryid_foreign FOREIGN KEY(CategoryID) REFERENCES Categories(CategoryID);
+    JobRequests ADD CONSTRAINT jobrequest_categoryid_foreign FOREIGN KEY(CategoryID) REFERENCES Categories(CategoryID);
 ALTER TABLE
-    JobRequest ADD CONSTRAINT jobrequest_commentid_foreign FOREIGN KEY(CommentID) REFERENCES Comment(CommentID);
+    JobRequests ADD CONSTRAINT jobrequest_commentid_foreign FOREIGN KEY(CommentID) REFERENCES Comments(CommentID);
 ALTER TABLE
-    JobRequest ADD CONSTRAINT jobrequest_jobofferstatusid_foreign FOREIGN KEY(JobOfferStatusID) REFERENCES JobOfferStatus(JobOfferStatusID);
+    JobRequests ADD CONSTRAINT jobrequest_jobofferstatusid_foreign FOREIGN KEY(JobOfferStatusID) REFERENCES JobOfferStatus(JobOfferStatusID);
 ALTER TABLE
-    InterstedInRequest ADD CONSTRAINT interstedinrequest_jobrequestid_foreign FOREIGN KEY(JobRequestID) REFERENCES JobRequest(JobRequestID);
+    InterstedInRequest ADD CONSTRAINT interstedinrequest_jobrequestid_foreign FOREIGN KEY(JobRequestID) REFERENCES JobRequests(JobRequestID);
 ALTER TABLE
-    JobApplication ADD CONSTRAINT jobapplication_employerid_foreign FOREIGN KEY(EmployerID) REFERENCES Employer(EmployerID);
+    JobApplications ADD CONSTRAINT jobapplications_employerid_foreign FOREIGN KEY(EmployerID) REFERENCES Employers(EmployerID);
 ALTER TABLE
-    JobApplication ADD CONSTRAINT jobapplication_appstatus_foreign FOREIGN KEY(AppStatus) REFERENCES JobApplicationStatus(StatusID);
+    JobApplications ADD CONSTRAINT jobapplications_jobappstatus_foreign FOREIGN KEY(JobAppStatus) REFERENCES JobApplicationStatus(StatusID);
 ALTER TABLE
-    JobOffer ADD CONSTRAINT joboffer_jobofferstatusid_foreign FOREIGN KEY(JobOfferStatusID) REFERENCES JobOfferStatus(JobOfferStatusID);
+    JobOffers ADD CONSTRAINT joboffer_jobofferstatusid_foreign FOREIGN KEY(JobOfferStatusID) REFERENCES JobOfferStatus(JobOfferStatusID);
+ALTER TABLE
+    Users ADD CONSTRAINT users_usertypeid_foreign FOREIGN KEY(UserTypeID) REFERENCES UserTypes(UserTypeID);
 
 
-    USE [IJobDB]
+
+
+
+
+USE [IJobDB]
 GO
 
 INSERT INTO [dbo].[Rating]
-           ([RatingID]
-           ,[RatingName])
+           ([Rating])
      VALUES
-           (1,
-		   'Bad')
+           (1)
 GO
 
 INSERT INTO [dbo].[Rating]
-           ([RatingID]
-           ,[RatingName])
+           (
+           [Rating])
      VALUES
-           (2,
-		   'Not bad')
-GO
-
-
-INSERT INTO [dbo].[Rating]
-           ([RatingID]
-           ,[RatingName])
-     VALUES
-           (3,
-		   'Good')
-GO
-
-INSERT INTO [dbo].[Rating]
-           ([RatingID]
-           ,[RatingName])
-     VALUES
-           (4,
-		   'Very good')
+           (2)
 GO
 
 
 INSERT INTO [dbo].[Rating]
-           ([RatingID]
-           ,[RatingName])
+           (
+           [Rating])
      VALUES
-           (5,
-		   'Excellent')
+           (3)
+GO
+
+INSERT INTO [dbo].[Rating]
+           (
+          [Rating])
+     VALUES
+           (4)
 GO
 
 
+INSERT INTO [dbo].[Rating]
+           ([Rating])
+     VALUES
+           (5)
+GO
