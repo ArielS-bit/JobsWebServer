@@ -29,11 +29,15 @@ namespace JobsWebServerBL.Models
         public virtual DbSet<JobOfferStatus> JobOfferStatuses { get; set; }
         public virtual DbSet<JobRequest> JobRequests { get; set; }
         public virtual DbSet<Rating> Ratings { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserType> UserTypes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=IJobDB;Trusted_Connection=True;");
             }
         }
 
@@ -52,7 +56,7 @@ namespace JobsWebServerBL.Models
             modelBuilder.Entity<ChatBox>(entity =>
             {
                 entity.HasKey(e => e.PhraseId)
-                    .HasName("PK__ChatBox__0DBA0EA2ABBEA830");
+                    .HasName("PK__ChatBox__0DBA0EA23DACECB8");
 
                 entity.ToTable("ChatBox");
 
@@ -66,8 +70,6 @@ namespace JobsWebServerBL.Models
 
             modelBuilder.Entity<Comment>(entity =>
             {
-                entity.ToTable("Comment");
-
                 entity.HasIndex(e => e.JobOfferId, "JobOfferIDIndex")
                     .IsUnique();
 
@@ -80,100 +82,32 @@ namespace JobsWebServerBL.Models
 
             modelBuilder.Entity<Employee>(entity =>
             {
-                entity.ToTable("Employee");
-
-                entity.HasIndex(e => e.Email, "EmailIndex")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.LastName, "LastNameIndex")
+                entity.HasIndex(e => e.UserId, "UserIDIndex")
                     .IsUnique();
 
                 entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
 
-                entity.Property(e => e.Birthday).HasColumnType("date");
-
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Gender)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Nickname)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Pass)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.RatingId).HasColumnName("RatingID");
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
 
                 entity.HasOne(d => d.Rating)
                     .WithMany(p => p.Employees)
                     .HasForeignKey(d => d.RatingId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("employee_ratingid_foreign");
+                    .HasConstraintName("employees_ratingid_foreign");
             });
 
             modelBuilder.Entity<Employer>(entity =>
             {
-                entity.ToTable("Employer");
-
-                entity.HasIndex(e => e.Email, "EmailIndex")
+                entity.HasIndex(e => e.UserId, "UserIDIndex")
                     .IsUnique();
 
-                entity.HasIndex(e => e.LastName, "LastNameIndex")
-                    .IsUnique();
+                entity.Property(e => e.EmployerId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("EmployerID");
 
-                entity.Property(e => e.EmployerId).HasColumnName("EmployerID");
-
-                entity.Property(e => e.Birthday).HasColumnType("date");
-
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Gender)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Nickname)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Pass)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
+                entity.Property(e => e.UserId).HasColumnName("UserID");
             });
 
             modelBuilder.Entity<InterstedInRequest>(entity =>
@@ -196,11 +130,9 @@ namespace JobsWebServerBL.Models
             modelBuilder.Entity<JobApplication>(entity =>
             {
                 entity.HasKey(e => e.AppId)
-                    .HasName("PK__JobAppli__8E2CF7D902688066");
+                    .HasName("PK__JobAppli__8E2CF7D9B837173C");
 
-                entity.ToTable("JobApplication");
-
-                entity.HasIndex(e => e.AppStatus, "AppStatusIndex")
+                entity.HasIndex(e => e.JobAppStatus, "AppStatusIndex")
                     .IsUnique();
 
                 entity.Property(e => e.AppId).HasColumnName("AppID");
@@ -211,35 +143,35 @@ namespace JobsWebServerBL.Models
 
                 entity.Property(e => e.JobOfferId).HasColumnName("JobOfferID");
 
-                entity.HasOne(d => d.AppStatusNavigation)
-                    .WithOne(p => p.JobApplication)
-                    .HasForeignKey<JobApplication>(d => d.AppStatus)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("jobapplication_appstatus_foreign");
-
                 entity.HasOne(d => d.Employee)
                     .WithMany(p => p.JobApplications)
                     .HasForeignKey(d => d.EmployeeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("jobapplication_employeeid_foreign");
+                    .HasConstraintName("jobapplications_employeeid_foreign");
 
                 entity.HasOne(d => d.Employer)
                     .WithMany(p => p.JobApplications)
                     .HasForeignKey(d => d.EmployerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("jobapplication_employerid_foreign");
+                    .HasConstraintName("jobapplications_employerid_foreign");
+
+                entity.HasOne(d => d.JobAppStatusNavigation)
+                    .WithOne(p => p.JobApplication)
+                    .HasForeignKey<JobApplication>(d => d.JobAppStatus)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("jobapplications_jobappstatus_foreign");
 
                 entity.HasOne(d => d.JobOffer)
                     .WithMany(p => p.JobApplications)
                     .HasForeignKey(d => d.JobOfferId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("jobapplication_jobofferid_foreign");
+                    .HasConstraintName("jobapplications_jobofferid_foreign");
             });
 
             modelBuilder.Entity<JobApplicationStatus>(entity =>
             {
                 entity.HasKey(e => e.StatusId)
-                    .HasName("PK__JobAppli__C8EE20432C476996");
+                    .HasName("PK__JobAppli__C8EE2043F59C5A6B");
 
                 entity.ToTable("JobApplicationStatus");
 
@@ -256,12 +188,15 @@ namespace JobsWebServerBL.Models
 
             modelBuilder.Entity<JobOffer>(entity =>
             {
-                entity.ToTable("JobOffer");
+                entity.HasIndex(e => e.EmployerId, "EmployerIDIndex")
+                    .IsUnique();
 
                 entity.HasIndex(e => e.JobOfferStatusId, "JobOfferStatusIDIndex")
                     .IsUnique();
 
-                entity.Property(e => e.JobOfferId).HasColumnName("JobOfferID");
+                entity.Property(e => e.JobOfferId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("JobOfferID");
 
                 entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
 
@@ -283,19 +218,19 @@ namespace JobsWebServerBL.Models
                     .WithMany(p => p.JobOffers)
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("joboffer_categoryid_foreign");
+                    .HasConstraintName("joboffers_categoryid_foreign");
 
                 entity.HasOne(d => d.Comment)
                     .WithMany(p => p.JobOffers)
                     .HasForeignKey(d => d.CommentId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("joboffer_commentid_foreign");
+                    .HasConstraintName("joboffers_commentid_foreign");
 
                 entity.HasOne(d => d.Employer)
-                    .WithMany(p => p.JobOffers)
-                    .HasForeignKey(d => d.EmployerId)
+                    .WithOne(p => p.JobOffer)
+                    .HasForeignKey<JobOffer>(d => d.EmployerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("joboffer_employerid_foreign");
+                    .HasConstraintName("joboffers_employerid_foreign");
 
                 entity.HasOne(d => d.JobOfferStatus)
                     .WithOne(p => p.JobOffer)
@@ -322,8 +257,6 @@ namespace JobsWebServerBL.Models
 
             modelBuilder.Entity<JobRequest>(entity =>
             {
-                entity.ToTable("JobRequest");
-
                 entity.HasIndex(e => e.EmployeeId, "EmployeeIDIndex")
                     .IsUnique();
 
@@ -372,11 +305,46 @@ namespace JobsWebServerBL.Models
             {
                 entity.ToTable("Rating");
 
-                entity.Property(e => e.Id).HasColumnName("ID");
-
                 entity.Property(e => e.RatingId).HasColumnName("RatingID");
 
-                entity.Property(e => e.RatingName)
+                entity.Property(e => e.Rating1).HasColumnName("Rating");
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasIndex(e => e.Email, "EmailIndex")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.LastName, "LastNameIndex")
+                    .IsUnique();
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Pass)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UserTypeId).HasColumnName("UserTypeID");
+
+                entity.HasOne(d => d.UserType)
+                    .WithMany(p => p.Users)
+                    .HasForeignKey(d => d.UserTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("users_usertypeid_foreign");
+            });
+
+            modelBuilder.Entity<UserType>(entity =>
+            {
+                entity.Property(e => e.UserTypeId).HasColumnName("UserTypeID");
+
+                entity.Property(e => e.UserTypeName)
+                    .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);
             });

@@ -17,7 +17,7 @@ namespace JobsWebServerBL.Models
         public int Content { get; set; }
         public int JobOfferId { get; set; }
         public int JobRequestId { get; set; }
-        public int LikeAmount { get; set; }
+        public int Likes { get; set; }
 
         public virtual ICollection<JobOffer> JobOffers { get; set; }
         public virtual ICollection<JobRequest> JobRequests { get; set; }

@@ -10,12 +10,12 @@ namespace JobsWebServerBL.Models
         public int AppId { get; set; }
         public int EmployeeId { get; set; }
         public int JobOfferId { get; set; }
-        public int AppStatus { get; set; }
+        public int JobAppStatus { get; set; }
         public int EmployerId { get; set; }
 
-        public virtual JobApplicationStatus AppStatusNavigation { get; set; }
         public virtual Employee Employee { get; set; }
         public virtual Employer Employer { get; set; }
+        public virtual JobApplicationStatus JobAppStatusNavigation { get; set; }
         public virtual JobOffer JobOffer { get; set; }
     }
 }
