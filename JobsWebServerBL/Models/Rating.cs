@@ -13,7 +13,7 @@ namespace JobsWebServerBL.Models
         }
 
         public int RatingId { get; set; }
-        public int Rating1 { get; set; }
+        public string RatingName { get; set; }
 
         public virtual ICollection<Employee> Employees { get; set; }
     }

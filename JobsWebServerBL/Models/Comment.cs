@@ -14,11 +14,13 @@ namespace JobsWebServerBL.Models
         }
 
         public int CommentId { get; set; }
-        public int Content { get; set; }
+        public string Content { get; set; }
         public int JobOfferId { get; set; }
         public int JobRequestId { get; set; }
         public int Likes { get; set; }
 
+        public virtual JobOffer JobOffer { get; set; }
+        public virtual JobRequest JobRequest { get; set; }
         public virtual ICollection<JobOffer> JobOffers { get; set; }
         public virtual ICollection<JobRequest> JobRequests { get; set; }
     }

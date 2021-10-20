@@ -18,6 +18,7 @@ namespace JobsWebServerBL.Models
         public int RatingId { get; set; }
 
         public virtual Rating Rating { get; set; }
+        public virtual JobRequest JobRequest { get; set; }
         public virtual ICollection<JobApplication> JobApplications { get; set; }
     }
 }

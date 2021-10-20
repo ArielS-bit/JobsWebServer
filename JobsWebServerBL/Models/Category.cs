@@ -14,7 +14,7 @@ namespace JobsWebServerBL.Models
         }
 
         public int CategoryId { get; set; }
-        public int CategoryName { get; set; }
+        public string CategoryName { get; set; }
 
         public virtual ICollection<JobOffer> JobOffers { get; set; }
         public virtual ICollection<JobRequest> JobRequests { get; set; }

@@ -42,7 +42,7 @@ namespace JobsWebServerBL.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Hebrew_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
             modelBuilder.Entity<Category>(entity =>
             {
@@ -50,12 +50,17 @@ namespace JobsWebServerBL.Models
                     .IsUnique();
 
                 entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
+
+                entity.Property(e => e.CategoryName)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<ChatBox>(entity =>
             {
                 entity.HasKey(e => e.PhraseId)
-                    .HasName("PK__ChatBox__0DBA0EA23DACECB8");
+                    .HasName("PK__ChatBox__0DBA0EA257D17A70");
 
                 entity.ToTable("ChatBox");
 
@@ -74,9 +79,25 @@ namespace JobsWebServerBL.Models
 
                 entity.Property(e => e.CommentId).HasColumnName("CommentID");
 
+                entity.Property(e => e.Content)
+                    .IsRequired()
+                    .HasColumnType("text");
+
                 entity.Property(e => e.JobOfferId).HasColumnName("JobOfferID");
 
                 entity.Property(e => e.JobRequestId).HasColumnName("JobRequestID");
+
+                entity.HasOne(d => d.JobOffer)
+                    .WithOne(p => p.Comment)
+                    .HasForeignKey<Comment>(d => d.JobOfferId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("comments_jobofferid_foreign");
+
+                entity.HasOne(d => d.JobRequest)
+                    .WithMany(p => p.Comments)
+                    .HasForeignKey(d => d.JobRequestId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("comments_jobrequestid_foreign");
             });
 
             modelBuilder.Entity<Employee>(entity =>
@@ -129,9 +150,9 @@ namespace JobsWebServerBL.Models
             modelBuilder.Entity<JobApplication>(entity =>
             {
                 entity.HasKey(e => e.AppId)
-                    .HasName("PK__JobAppli__8E2CF7D9B837173C");
+                    .HasName("PK__JobAppli__8E2CF7D9BD9F75C0");
 
-                entity.HasIndex(e => e.JobAppStatus, "AppStatusIndex")
+                entity.HasIndex(e => e.JobAppStatusId, "AppStatusIndex")
                     .IsUnique();
 
                 entity.Property(e => e.AppId).HasColumnName("AppID");
@@ -139,6 +160,8 @@ namespace JobsWebServerBL.Models
                 entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
 
                 entity.Property(e => e.EmployerId).HasColumnName("EmployerID");
+
+                entity.Property(e => e.JobAppStatusId).HasColumnName("JobAppStatusID");
 
                 entity.Property(e => e.JobOfferId).HasColumnName("JobOfferID");
 
@@ -154,11 +177,11 @@ namespace JobsWebServerBL.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("jobapplications_employerid_foreign");
 
-                entity.HasOne(d => d.JobAppStatusNavigation)
+                entity.HasOne(d => d.JobAppStatus)
                     .WithOne(p => p.JobApplication)
-                    .HasForeignKey<JobApplication>(d => d.JobAppStatus)
+                    .HasForeignKey<JobApplication>(d => d.JobAppStatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("jobapplications_jobappstatus_foreign");
+                    .HasConstraintName("jobapplications_jobappstatusid_foreign");
 
                 entity.HasOne(d => d.JobOffer)
                     .WithMany(p => p.JobApplications)
@@ -170,7 +193,7 @@ namespace JobsWebServerBL.Models
             modelBuilder.Entity<JobApplicationStatus>(entity =>
             {
                 entity.HasKey(e => e.StatusId)
-                    .HasName("PK__JobAppli__C8EE2043F59C5A6B");
+                    .HasName("PK__JobAppli__C8EE20433500A565");
 
                 entity.ToTable("JobApplicationStatus");
 
@@ -219,7 +242,7 @@ namespace JobsWebServerBL.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("joboffers_categoryid_foreign");
 
-                entity.HasOne(d => d.Comment)
+                entity.HasOne(d => d.CommentNavigation)
                     .WithMany(p => p.JobOffers)
                     .HasForeignKey(d => d.CommentId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -293,6 +316,18 @@ namespace JobsWebServerBL.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("jobrequest_commentid_foreign");
 
+                entity.HasOne(d => d.Employee)
+                    .WithOne(p => p.JobRequest)
+                    .HasForeignKey<JobRequest>(d => d.EmployeeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("jobrequests_employeeid_foreign");
+
+                entity.HasOne(d => d.Employer)
+                    .WithMany(p => p.JobRequests)
+                    .HasForeignKey(d => d.EmployerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("jobrequests_employerid_foreign");
+
                 entity.HasOne(d => d.JobOfferStatus)
                     .WithMany(p => p.JobRequests)
                     .HasForeignKey(d => d.JobOfferStatusId)
@@ -304,9 +339,14 @@ namespace JobsWebServerBL.Models
             {
                 entity.ToTable("Rating");
 
-                entity.Property(e => e.RatingId).HasColumnName("RatingID");
+                entity.Property(e => e.RatingId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("RatingID");
 
-                entity.Property(e => e.Rating1).HasColumnName("Rating");
+                entity.Property(e => e.RatingName)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -319,7 +359,29 @@ namespace JobsWebServerBL.Models
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
+                entity.Property(e => e.Birthday).HasColumnType("date");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Gender)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastName)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Nickname)
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);

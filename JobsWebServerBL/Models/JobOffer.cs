@@ -23,9 +23,10 @@ namespace JobsWebServerBL.Models
         public int CommentId { get; set; }
 
         public virtual Category Category { get; set; }
-        public virtual Comment Comment { get; set; }
+        public virtual Comment CommentNavigation { get; set; }
         public virtual Employer Employer { get; set; }
         public virtual JobOfferStatus JobOfferStatus { get; set; }
+        public virtual Comment Comment { get; set; }
         public virtual ICollection<JobApplication> JobApplications { get; set; }
     }
 }

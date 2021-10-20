@@ -10,6 +10,7 @@ namespace JobsWebServerBL.Models
         public Employer()
         {
             JobApplications = new HashSet<JobApplication>();
+            JobRequests = new HashSet<JobRequest>();
         }
 
         public int EmployerId { get; set; }
@@ -18,5 +19,6 @@ namespace JobsWebServerBL.Models
 
         public virtual JobOffer JobOffer { get; set; }
         public virtual ICollection<JobApplication> JobApplications { get; set; }
+        public virtual ICollection<JobRequest> JobRequests { get; set; }
     }
 }

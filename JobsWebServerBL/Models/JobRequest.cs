@@ -9,6 +9,7 @@ namespace JobsWebServerBL.Models
     {
         public JobRequest()
         {
+            Comments = new HashSet<Comment>();
             InterstedInRequests = new HashSet<InterstedInRequest>();
         }
 
@@ -24,7 +25,10 @@ namespace JobsWebServerBL.Models
 
         public virtual Category Category { get; set; }
         public virtual Comment Comment { get; set; }
+        public virtual Employee Employee { get; set; }
+        public virtual Employer Employer { get; set; }
         public virtual JobOfferStatus JobOfferStatus { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<InterstedInRequest> InterstedInRequests { get; set; }
     }
 }
