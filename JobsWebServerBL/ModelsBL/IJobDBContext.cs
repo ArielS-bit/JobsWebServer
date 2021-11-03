@@ -17,5 +17,13 @@ namespace JobsWebServerBL.Models
 
             return user;
         }
+
+        public void AddUser(User u)
+        {
+            //יש להוסיף את Gender, UserTypeID לפי בחירתם 
+            this.Users.Add(u);
+            this.SaveChanges();
+            
+        }
     }
 }
