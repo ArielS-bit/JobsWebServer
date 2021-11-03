@@ -138,7 +138,8 @@ CREATE TABLE Users(
     Nickname VARCHAR(255) NOT NULL,
     Birthday DATE NOT NULL,
     Gender VARCHAR(255) NOT NULL,
-    UserTypeID INT NOT NULL
+    UserTypeID INT NOT NULL,
+	PrivateAnswer VARCHAR(255) NOT NULL
 );
 
 CREATE UNIQUE INDEX LastNameIndex
@@ -275,7 +276,8 @@ INSERT INTO [dbo].[Users]
            ,[Nickname]
            ,[Birthday]
            ,[Gender]
-           ,[UserTypeID])
+           ,[UserTypeID]
+		   ,[PrivateAnswer])
      VALUES
            ('Lucas',
            'Haribo',
@@ -284,7 +286,8 @@ INSERT INTO [dbo].[Users]
            'Luc1',
            '2016/08/27 21:02:44',
            'Male',
-           '2')
+           '2',
+		   'Medevdev')
 GO
 
 INSERT INTO [dbo].[Users]
@@ -295,7 +298,8 @@ INSERT INTO [dbo].[Users]
            ,[Nickname]
            ,[Birthday]
            ,[Gender]
-           ,[UserTypeID])
+           ,[UserTypeID]
+		   ,[PrivateAnswer])
      VALUES
            ('Steve',
            'Jobs',
@@ -304,7 +308,8 @@ INSERT INTO [dbo].[Users]
            'AppleFounder',
            '1955/02/24 21:02:44',
            'Male',
-           '1')
+           '1',
+		   'Reed')
 GO
 
 SELECT * FROM Users
