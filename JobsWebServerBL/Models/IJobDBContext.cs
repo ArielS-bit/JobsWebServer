@@ -36,13 +36,13 @@ namespace JobsWebServerBL.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=IJobDB;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=localhost\\sqlexpress;Database=IJobDB;Trusted_Connection=True;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "Hebrew_CI_AS");
 
             modelBuilder.Entity<Category>(entity =>
             {
@@ -60,7 +60,7 @@ namespace JobsWebServerBL.Models
             modelBuilder.Entity<ChatBox>(entity =>
             {
                 entity.HasKey(e => e.PhraseId)
-                    .HasName("PK__ChatBox__0DBA0EA257D17A70");
+                    .HasName("PK__ChatBox__0DBA0EA26ABA15FF");
 
                 entity.ToTable("ChatBox");
 
@@ -150,7 +150,7 @@ namespace JobsWebServerBL.Models
             modelBuilder.Entity<JobApplication>(entity =>
             {
                 entity.HasKey(e => e.AppId)
-                    .HasName("PK__JobAppli__8E2CF7D9BD9F75C0");
+                    .HasName("PK__JobAppli__8E2CF7D9ABB48DC8");
 
                 entity.HasIndex(e => e.JobAppStatusId, "AppStatusIndex")
                     .IsUnique();
@@ -193,7 +193,7 @@ namespace JobsWebServerBL.Models
             modelBuilder.Entity<JobApplicationStatus>(entity =>
             {
                 entity.HasKey(e => e.StatusId)
-                    .HasName("PK__JobAppli__C8EE20433500A565");
+                    .HasName("PK__JobAppli__C8EE20433412B190");
 
                 entity.ToTable("JobApplicationStatus");
 
@@ -387,6 +387,11 @@ namespace JobsWebServerBL.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Pass)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PrivateAnswer)
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);
