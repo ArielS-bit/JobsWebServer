@@ -82,7 +82,7 @@ namespace JobsWebServer.Controllers
         [HttpPost]
         public bool SignUp([FromBody] User user)
         {
-            //If user is null the request is bad
+            
             if (user == null)
             {
                 Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
