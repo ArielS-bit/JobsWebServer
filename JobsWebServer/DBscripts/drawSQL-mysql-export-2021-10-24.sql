@@ -313,3 +313,28 @@ INSERT INTO [dbo].[Users]
 GO
 
 SELECT * FROM Users
+
+USE [IJobDB]
+GO
+
+INSERT INTO [dbo].[Users]
+           ([FirstName]
+           ,[LastName]
+           ,[Email]
+           ,[Pass]
+           ,[Nickname]
+           ,[Birthday]
+           ,[Gender]
+           ,[UserTypeID]
+           ,[PrivateAnswer])
+     VALUES
+           ('Admin'
+           ,'Admin'
+           ,'Admin@gmail.com'
+           ,'123'
+           ,'Admin'
+           ,'2000-5-11'
+           ,'Male'
+           ,1
+           ,'Lucas')
+GO
