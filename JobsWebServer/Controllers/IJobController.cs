@@ -94,6 +94,13 @@ namespace JobsWebServer.Controllers
 
         }
 
+        //[Route("IsNickNameExist")]
+        //[HttpGet]
+        //public bool IsNickNameExist([FromQuery] string nickname)
+        //{
+            
+        //}
+
 
 
 

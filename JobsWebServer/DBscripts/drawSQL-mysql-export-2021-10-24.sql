@@ -312,7 +312,7 @@ INSERT INTO [dbo].[Users]
 		   'Reed')
 GO
 
-SELECT * FROM Users
+
 
 USE [IJobDB]
 GO
@@ -338,3 +338,4 @@ INSERT INTO [dbo].[Users]
            ,1
            ,'Lucas')
 GO
+SELECT * FROM Users
