@@ -24,6 +24,7 @@ namespace JobsWebServerBL.Models
             this.Users.Add(u);
             this.SaveChanges();
             
+            
         }
     }
 }

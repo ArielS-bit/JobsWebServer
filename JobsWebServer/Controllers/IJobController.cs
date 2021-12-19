@@ -80,18 +80,25 @@ namespace JobsWebServer.Controllers
 
         [Route("SignUp")]
         [HttpPost]
-        public bool SignUp([FromBody] User user)
+        public User SignUp([FromBody] User user)
         {
             
             if (user == null)
             {
                 Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
-                return false;
+                return null;
             }
 
             this.context.AddUser(user);
-            return true;
+            return context.Users.Include(u=>u.UserType).Where(u=>u.Email==user.Email).FirstOrDefault();
 
+        }
+
+        [Route ("GetUserTypes")]
+        [HttpGet]
+        public List<UserType> GetUserTypes()
+        {
+            return this.context.UserTypes.ToList(); 
         }
 
         //[Route("IsNickNameExist")]
