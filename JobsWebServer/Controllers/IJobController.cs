@@ -101,12 +101,13 @@ namespace JobsWebServer.Controllers
             return this.context.UserTypes.ToList(); 
         }
 
-        //[Route("IsNickNameExist")]
-        //[HttpGet]
-        //public bool IsNickNameExist([FromQuery] string nickname)
-        //{
-            
-        //}
+        [Route("IsNickNameExist")]
+        [HttpGet]
+        public bool IsNickNameExist([FromQuery] string nickname)
+        {
+            User u = this.context.Users.FirstOrDefault(u => u.Nickname == nickname);
+            return (u == null);
+        }
 
 
 
