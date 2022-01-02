@@ -105,8 +105,17 @@ namespace JobsWebServer.Controllers
         [HttpGet]
         public bool IsNickNameExist([FromQuery] string nickname)
         {
-            User u = this.context.Users.FirstOrDefault(u => u.Nickname == nickname);
-            return (u == null);
+            User user = this.context.Users.Where(u => u.Nickname == nickname).FirstOrDefault();
+            if (user == null) 
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+            
+            //return (u != null);
         }
 
 
