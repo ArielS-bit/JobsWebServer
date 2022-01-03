@@ -116,6 +116,23 @@ namespace JobsWebServer.Controllers
             }
             
             //return (u != null);
+        } 
+        
+        [Route("IsEmailExist")]
+        [HttpGet]
+        public bool IsEmailExist([FromQuery] string email)
+        {
+            User user = this.context.Users.Where(u => u.Email == email).FirstOrDefault();
+            if (user == null) 
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+            
+           
         }
 
 
