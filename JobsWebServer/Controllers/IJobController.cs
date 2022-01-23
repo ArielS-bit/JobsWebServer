@@ -135,6 +135,17 @@ namespace JobsWebServer.Controllers
            
         }
 
+        [Route("IsPetNameCorrect")]
+        [HttpGet]
+        public bool IsPetNameCorrect([FromQuery] string email, [FromQuery] string petName)
+        {
+            User user = this.context.Users.Where(u => u.Email == email).FirstOrDefault();
+            //User won't be null bc it's already been checked
+            bool isPetNameCorrect = user.PrivateAnswer.Equals(petName);
+            return isPetNameCorrect; 
+
+        }
+
 
 
 
