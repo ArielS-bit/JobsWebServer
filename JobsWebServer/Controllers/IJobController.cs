@@ -146,6 +146,15 @@ namespace JobsWebServer.Controllers
 
         }
 
+        [Route("GetUser")]
+        [HttpGet]
+        public User GetUser([FromQuery] string email)
+        {
+            User user = this.context.Users.Where(u => u.Email == email).FirstOrDefault();
+            return user;
+
+        }
+
 
 
 
