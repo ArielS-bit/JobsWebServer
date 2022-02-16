@@ -18,13 +18,17 @@ namespace JobsWebServer.Controllers
     {
         //Connection to the DB Context via dependency injection
         IJobDBContext context;
+      
         public IJobController(IJobDBContext context)
         {
             this.context = context;
         }
 
         //set the contact default photo image name
-        public const string DEFAULT_PHOTO = "defaultphoto.jpg";
+        public const string DEFAULT_PROFILE_PHOTO = "DefualtProfile.PNG";
+
+     
+       
 
 
 
@@ -153,6 +157,40 @@ namespace JobsWebServer.Controllers
             User user = this.context.Users.Where(u => u.Email == email).FirstOrDefault();
             return user;
 
+        }
+
+        [Route("UploadImage")]
+        [HttpPost]
+
+        public async Task<IActionResult> UploadImage(IFormFile file)
+        {
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the contact user ID
+            if (user != null)
+            {
+                if (file == null)
+                {
+                    return BadRequest();
+                }
+
+                try
+                {
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", file.FileName);
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+
+                    return Ok(new { length = file.Length, name = file.FileName });
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return BadRequest();
+                }
+            }
+            return Forbid();
         }
 
 
