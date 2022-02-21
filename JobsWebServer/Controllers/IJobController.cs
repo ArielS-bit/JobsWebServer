@@ -94,6 +94,8 @@ namespace JobsWebServer.Controllers
             }
 
             this.context.AddUser(user);
+            HttpContext.Session.SetObject("theUser", user);
+            Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
             return context.Users.Include(u=>u.UserType).Where(u=>u.Email==user.Email).FirstOrDefault();
 
         }
