@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+
+using JobsWebServer.DTO;
 using JobsWebServerBL.Models;
 using System.IO;
 
@@ -53,6 +55,31 @@ namespace JobsWebServer.Controllers
             return DateTime.Now.ToString("dd/MM/yyyy HH:mm");
 
         }
+
+        [Route("GetLookups")]
+        [HttpGet]
+        public LookUps GetLookups()
+        {
+            try
+            {
+                LookUps obj = new LookUps()
+                {
+                    //OccupationalAreas = context.OccupationalAreas.ToList(),
+                    //Branches = context.Branches.ToList(),
+                   
+                };
+
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                return obj;
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
 
 
         [Route("Login")]

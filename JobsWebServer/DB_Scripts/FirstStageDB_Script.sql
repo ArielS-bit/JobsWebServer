@@ -39,7 +39,6 @@ CREATE TABLE JobOffers(
     EmployerID INT NOT NULL,
     Applied bit NOT NULL,
 	NumApplied INT NOT NULL,
-    Profession TEXT NOT NULL,
 	JobTitle VARCHAR(255) NOT NULL,
 	RequiredAge INT NOT NULL,
 	RequiredEmployees INT NOT NULL,
@@ -343,3 +342,81 @@ INSERT INTO [dbo].[Users]
            ,'Lucas')
 GO
 SELECT * FROM Users
+
+USE [IJobDB]
+GO
+
+INSERT INTO [dbo].[Categories]
+           ([CategoryName])
+     VALUES
+           ('Dogwalking')
+GO
+
+INSERT INTO [dbo].[Categories]
+           ([CategoryName])
+     VALUES
+           ('Babysitting')
+GO
+
+INSERT INTO [dbo].[Categories]
+           ([CategoryName])
+     VALUES
+           ('Private Tutoring')
+GO
+
+INSERT INTO [dbo].[Categories]
+           ([CategoryName])
+     VALUES
+           ('Serving (waitress)')
+GO
+
+INSERT INTO [dbo].[Categories]
+           ([CategoryName])
+     VALUES
+           ('Deliveries')
+GO
+
+INSERT INTO [dbo].[Categories]
+           ([CategoryName])
+     VALUES
+           ('Food Vendor')
+GO
+
+INSERT INTO [dbo].[Categories]
+           ([CategoryName])
+     VALUES
+           ('Store Seller')
+GO
+
+INSERT INTO [dbo].[Categories]
+           ([CategoryName])
+     VALUES
+           ('Guide')
+GO
+
+INSERT INTO [dbo].[Categories]
+           ([CategoryName])
+     VALUES
+           ('Handing out flyers')
+GO
+
+
+GO
+
+INSERT INTO [dbo].[Categories]
+           ([CategoryName])
+     VALUES
+           ('Mail Delivery')
+GO
+
+
+INSERT INTO [dbo].[Categories]
+           ([CategoryName])
+     VALUES
+           ('Other')
+GO
+
+<!-- לשים אופציהכאן באחר שהם יכולים לכתוב ואז אני אסמוך עליהם שזה תקין ולא צריך ולידציה -->
+
+select * from Categories ORDER BY CategoryID
+

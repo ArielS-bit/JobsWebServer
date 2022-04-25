@@ -20,10 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\JobsWebServerBL\JobsWebServerBL.csproj" />
   </ItemGroup>
 

@@ -17,7 +17,6 @@ namespace JobsWebServer.Models
         public int EmployerId { get; set; }
         public bool Applied { get; set; }
         public int NumApplied { get; set; }
-        public string Profession { get; set; }
         public string JobTitle { get; set; }
         public int RequiredAge { get; set; }
         public int RequiredEmployees { get; set; }
