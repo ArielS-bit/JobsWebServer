@@ -219,6 +219,25 @@ namespace JobsWebServer.Controllers
             return Forbid();
         }
 
+        [Route("AddJobOffer")]
+        [HttpPost]
+        public bool AddJobOffer([FromBody] JobOffer jobOffer)
+        {
+
+            if (jobOffer == null)
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
+                return false;
+            }
+
+            this.context.AddJobOffer(jobOffer);
+            //HttpContext.Session.SetObject("theUser", user);//Might not needed
+            Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+            return true;
+
+        }
+
+
 
 
 

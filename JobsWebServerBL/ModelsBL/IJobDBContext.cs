@@ -26,5 +26,11 @@ namespace JobsWebServerBL.Models
             
             
         }
+
+        public void AddJobOffer(JobOffer j)
+        {
+            this.JobOffers.Add(j);
+            this.SaveChanges();
+        }
     }
 }
