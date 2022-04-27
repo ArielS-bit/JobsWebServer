@@ -201,7 +201,7 @@ namespace JobsWebServer.Controllers
 
                 try
                 {
-                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images", file.FileName);
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/ProfileImages", file.FileName);
                     using (var stream = new FileStream(path, FileMode.Create))
                     {
                         await file.CopyToAsync(stream);
