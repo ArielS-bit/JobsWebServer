@@ -238,10 +238,6 @@ namespace JobsWebServer.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Profession)
-                    .IsRequired()
-                    .HasColumnType("text");
-
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.JobOffers)
                     .HasForeignKey(d => d.CategoryId)
