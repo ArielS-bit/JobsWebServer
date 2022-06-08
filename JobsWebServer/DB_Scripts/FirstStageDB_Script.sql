@@ -26,8 +26,8 @@ on Employees (UserID);
 
 CREATE TABLE Employers(
     EmployerID INT PRIMARY KEY NOT NULL ,
-    UserID INT NOT NULL,
-    IsEmployee bit NOT NULL
+    UserID INT NOT NULL
+   
 );
 
 CREATE UNIQUE INDEX UserIDIndex
@@ -142,6 +142,7 @@ CREATE TABLE Users(
     Birthday DATE NOT NULL,
     Gender VARCHAR(255) NOT NULL,
     UserTypeID INT NOT NULL,
+	Profession VARCHAR(255) NOT NULL,
 	PrivateAnswer VARCHAR(255) NOT NULL
 );
 
@@ -246,11 +247,6 @@ GO
 USE [IJobDB]
 GO
 
-INSERT INTO [dbo].[UserTypes]
-           ([UserTypeName])
-     VALUES
-           ('Admin')
-GO
 
 INSERT INTO [dbo].[UserTypes]
            ([UserTypeName])
@@ -280,6 +276,7 @@ INSERT INTO [dbo].[Users]
            ,[Birthday]
            ,[Gender]
            ,[UserTypeID]
+		   ,[Profession]
 		   ,[PrivateAnswer])
      VALUES
            ('Lucas',
@@ -290,6 +287,7 @@ INSERT INTO [dbo].[Users]
            '2016/08/27 21:02:44',
            'Male',
            '2',
+		    'Dog-Walker',
 		   'Medevdev')
 GO
 
@@ -302,6 +300,7 @@ INSERT INTO [dbo].[Users]
            ,[Birthday]
            ,[Gender]
            ,[UserTypeID]
+		   ,[Profession]
 		   ,[PrivateAnswer])
      VALUES
            ('Steve',
@@ -312,6 +311,7 @@ INSERT INTO [dbo].[Users]
            '1955/02/24 21:02:44',
            'Male',
            '1',
+		    'Dog-Walker',
 		   'Reed')
 GO
 
@@ -329,6 +329,7 @@ INSERT INTO [dbo].[Users]
            ,[Birthday]
            ,[Gender]
            ,[UserTypeID]
+		   ,[Profession]
            ,[PrivateAnswer])
      VALUES
            ('Admin'
@@ -339,6 +340,7 @@ INSERT INTO [dbo].[Users]
            ,'2000-5-11'
            ,'Male'
            ,1
+		   ,'Dog-Walker'
            ,'Lucas')
 GO
 SELECT * FROM Users
@@ -349,25 +351,25 @@ GO
 INSERT INTO [dbo].[Categories]
            ([CategoryName])
      VALUES
-           ('Dogwalking')
+           ('Dog-walker')
 GO
 
 INSERT INTO [dbo].[Categories]
            ([CategoryName])
      VALUES
-           ('Babysitting')
+           ('Babysitter')
 GO
 
 INSERT INTO [dbo].[Categories]
            ([CategoryName])
      VALUES
-           ('Private Tutoring')
+           ('Private Tutor')
 GO
 
 INSERT INTO [dbo].[Categories]
            ([CategoryName])
      VALUES
-           ('Serving (waitress)')
+           ('Serving')
 GO
 
 INSERT INTO [dbo].[Categories]

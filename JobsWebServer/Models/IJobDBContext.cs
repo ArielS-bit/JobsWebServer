@@ -43,7 +43,7 @@ namespace JobsWebServer.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Hebrew_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
             modelBuilder.Entity<Category>(entity =>
             {
@@ -61,7 +61,7 @@ namespace JobsWebServer.Models
             modelBuilder.Entity<ChatBox>(entity =>
             {
                 entity.HasKey(e => e.PhraseId)
-                    .HasName("PK__ChatBox__0DBA0EA2705F5641");
+                    .HasName("PK__ChatBox__0DBA0EA24EFD4E73");
 
                 entity.ToTable("ChatBox");
 
@@ -151,7 +151,7 @@ namespace JobsWebServer.Models
             modelBuilder.Entity<JobApplication>(entity =>
             {
                 entity.HasKey(e => e.AppId)
-                    .HasName("PK__JobAppli__8E2CF7D96EA56057");
+                    .HasName("PK__JobAppli__8E2CF7D9F9166B28");
 
                 entity.HasIndex(e => e.JobAppStatusId, "AppStatusIndex")
                     .IsUnique();
@@ -194,7 +194,7 @@ namespace JobsWebServer.Models
             modelBuilder.Entity<JobApplicationStatus>(entity =>
             {
                 entity.HasKey(e => e.StatusId)
-                    .HasName("PK__JobAppli__C8EE2043B1C116BB");
+                    .HasName("PK__JobAppli__C8EE20433FEE9208");
 
                 entity.ToTable("JobApplicationStatus");
 
@@ -394,6 +394,11 @@ namespace JobsWebServer.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.PrivateAnswer)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Profession)
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);

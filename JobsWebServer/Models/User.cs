@@ -16,6 +16,7 @@ namespace JobsWebServer.Models
         public DateTime Birthday { get; set; }
         public string Gender { get; set; }
         public int UserTypeId { get; set; }
+        public string Profession { get; set; }
         public string PrivateAnswer { get; set; }
 
         public virtual UserType UserType { get; set; }
