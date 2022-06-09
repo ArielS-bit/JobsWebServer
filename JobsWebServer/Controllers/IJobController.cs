@@ -185,6 +185,17 @@ namespace JobsWebServer.Controllers
 
         }
 
+        [Route("GetCategories")]
+        [HttpGet]
+        public List<Category> GetCategories()
+        {
+
+            return context.GetCategories();
+
+        }
+
+
+
         [Route("UploadImage")]
         [HttpPost]
 

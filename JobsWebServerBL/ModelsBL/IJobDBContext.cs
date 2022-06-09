@@ -32,5 +32,10 @@ namespace JobsWebServerBL.Models
             this.JobOffers.Add(j);
             this.SaveChanges();
         }
+
+        public List<Category> GetCategories()
+        {
+            return Categories.ToList<Category>();
+        }
     }
 }
