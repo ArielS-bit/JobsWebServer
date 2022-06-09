@@ -35,7 +35,7 @@ namespace JobsWebServer.Controllers
         [HttpGet]
         public string BasicFunc()
         {
-            return "Hello World!!!!";
+            return "Hello World!!";
         }
 
 
