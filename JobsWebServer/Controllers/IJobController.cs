@@ -43,7 +43,7 @@ namespace JobsWebServer.Controllers
         [HttpGet]
         public string Lucas()
         {
-            return "It's Lucas hereu!";
+            return "It's Lucas hereug!";
         }
 
 
