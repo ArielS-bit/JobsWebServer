@@ -48,5 +48,10 @@ namespace JobsWebServerBL.Models
         {
             return Categories.ToList<Category>();
         }
+
+        public List<JobOffer> GetJobOffersPerUser(int employerID)
+        {
+            return this.JobOffers.Where(j => j.EmployerId == employerID).ToList<JobOffer>();
+        }
     }
 }

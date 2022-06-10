@@ -194,6 +194,17 @@ namespace JobsWebServer.Controllers
 
         }
 
+        
+        [Route("GetJobOffers")]
+        [HttpGet]
+        public List<JobOffer> GetJobOffers(int employerID)
+        {
+
+            return context.GetJobOffersPerUser(employerID);
+
+        }
+
+
 
 
         [Route("UploadImage")]
