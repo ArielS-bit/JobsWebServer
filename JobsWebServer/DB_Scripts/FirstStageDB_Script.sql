@@ -34,25 +34,22 @@ CREATE UNIQUE INDEX UserIDIndex
 on Employers (UserID);
 
 CREATE TABLE JobOffers(
-    JobOfferID INT PRIMARY KEY NOT NULL ,
+    JobOfferID INT PRIMARY KEY IDENTITY(100,1) NOT NULL ,
     CategoryID INT NOT NULL,
     EmployerID INT NOT NULL,
     Applied bit NOT NULL,
 	NumApplied INT NOT NULL,
 	JobTitle VARCHAR(255) NOT NULL,
-	RequiredAge INT NOT NULL,
-	RequiredEmployees INT NOT NULL,
+	RequiredAge INT,
+	RequiredEmployees INT,
     JobOfferDescription TEXT NOT NULL,
     IsPrivate bit NOT NULL,
     JobOfferStatusID INT NOT NULL,
-    CommentID INT NOT NULL
+	StartingDate DATETIME NOT NULL,
+	EndingDate DATETIME NOT NULL,
+    CommentID INT 
 );
 
-CREATE UNIQUE INDEX JobOfferStatusIDIndex
-on JobOffers (JobOfferStatusID);
-
-CREATE UNIQUE INDEX EmployerIDIndex
-on JobOffers (EmployerID);
 
 CREATE TABLE Categories(
     CategoryID INT PRIMARY KEY IDENTITY(1,1) NOT NULL ,
@@ -418,7 +415,25 @@ INSERT INTO [dbo].[Categories]
            ('Other')
 GO
 
+
+INSERT INTO [dbo].[JobOfferStatus]
+           (JobOfferStatus)
+     VALUES
+           ('Available')
+INSERT INTO [dbo].[JobOfferStatus]
+           (JobOfferStatus)
+     VALUES
+           ('Unavailable')
+
+GO
+
+
+
+
 --<!-- לשים אופציהכאן באחר שהם יכולים לכתוב ואז אני אסמוך עליהם שזה תקין ולא צריך ולידציה -->
 
 select * from Categories ORDER BY CategoryID
+
+select * from Users
+select * from JobOffers
 

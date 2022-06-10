@@ -232,19 +232,19 @@ namespace JobsWebServer.Controllers
 
         [Route("AddJobOffer")]
         [HttpPost]
-        public bool AddJobOffer([FromBody] JobOffer jobOffer)
+        public JobOffer AddJobOffer([FromBody] JobOffer jobOffer)
         {
 
             if (jobOffer == null)
             {
                 Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
-                return false;
+                return null;
             }
 
             this.context.AddJobOffer(jobOffer);
             //HttpContext.Session.SetObject("theUser", user);//Might not needed
             Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-            return true;
+            return this.context.JobOffers.Where(j => j.JobOfferId == jobOffer.JobOfferId).FirstOrDefault(); ;
 
         }
 

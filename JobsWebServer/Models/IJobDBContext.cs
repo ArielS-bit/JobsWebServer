@@ -34,11 +34,7 @@ namespace JobsWebServer.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=IJobDB;Trusted_Connection=True;");
-            }
+           
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -61,7 +57,7 @@ namespace JobsWebServer.Models
             modelBuilder.Entity<ChatBox>(entity =>
             {
                 entity.HasKey(e => e.PhraseId)
-                    .HasName("PK__ChatBox__0DBA0EA24EFD4E73");
+                    .HasName("PK__ChatBox__0DBA0EA25DD143C7");
 
                 entity.ToTable("ChatBox");
 
@@ -151,7 +147,7 @@ namespace JobsWebServer.Models
             modelBuilder.Entity<JobApplication>(entity =>
             {
                 entity.HasKey(e => e.AppId)
-                    .HasName("PK__JobAppli__8E2CF7D9F9166B28");
+                    .HasName("PK__JobAppli__8E2CF7D9E3CE1D87");
 
                 entity.HasIndex(e => e.JobAppStatusId, "AppStatusIndex")
                     .IsUnique();
@@ -194,7 +190,7 @@ namespace JobsWebServer.Models
             modelBuilder.Entity<JobApplicationStatus>(entity =>
             {
                 entity.HasKey(e => e.StatusId)
-                    .HasName("PK__JobAppli__C8EE20433FEE9208");
+                    .HasName("PK__JobAppli__C8EE20430E12F523");
 
                 entity.ToTable("JobApplicationStatus");
 
@@ -211,21 +207,15 @@ namespace JobsWebServer.Models
 
             modelBuilder.Entity<JobOffer>(entity =>
             {
-                entity.HasIndex(e => e.EmployerId, "EmployerIDIndex")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.JobOfferStatusId, "JobOfferStatusIDIndex")
-                    .IsUnique();
-
-                entity.Property(e => e.JobOfferId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("JobOfferID");
+                entity.Property(e => e.JobOfferId).HasColumnName("JobOfferID");
 
                 entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
 
                 entity.Property(e => e.CommentId).HasColumnName("CommentID");
 
                 entity.Property(e => e.EmployerId).HasColumnName("EmployerID");
+
+                entity.Property(e => e.EndingDate).HasColumnType("datetime");
 
                 entity.Property(e => e.JobOfferDescription)
                     .IsRequired()
@@ -238,6 +228,8 @@ namespace JobsWebServer.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
+                entity.Property(e => e.StartingDate).HasColumnType("datetime");
+
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.JobOffers)
                     .HasForeignKey(d => d.CategoryId)
@@ -247,18 +239,17 @@ namespace JobsWebServer.Models
                 entity.HasOne(d => d.CommentNavigation)
                     .WithMany(p => p.JobOffers)
                     .HasForeignKey(d => d.CommentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("joboffers_commentid_foreign");
 
                 entity.HasOne(d => d.Employer)
-                    .WithOne(p => p.JobOffer)
-                    .HasForeignKey<JobOffer>(d => d.EmployerId)
+                    .WithMany(p => p.JobOffers)
+                    .HasForeignKey(d => d.EmployerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("joboffers_employerid_foreign");
 
                 entity.HasOne(d => d.JobOfferStatus)
-                    .WithOne(p => p.JobOffer)
-                    .HasForeignKey<JobOffer>(d => d.JobOfferStatusId)
+                    .WithMany(p => p.JobOffers)
+                    .HasForeignKey(d => d.JobOfferStatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("joboffer_jobofferstatusid_foreign");
             });

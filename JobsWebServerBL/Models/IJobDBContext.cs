@@ -34,15 +34,12 @@ namespace JobsWebServerBL.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Server=localhost\\sqlexpress;Database=IJobDB;Trusted_Connection=True;");
-            }
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Hebrew_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
             modelBuilder.Entity<Category>(entity =>
             {
@@ -60,7 +57,7 @@ namespace JobsWebServerBL.Models
             modelBuilder.Entity<ChatBox>(entity =>
             {
                 entity.HasKey(e => e.PhraseId)
-                    .HasName("PK__ChatBox__0DBA0EA26ABA15FF");
+                    .HasName("PK__ChatBox__0DBA0EA25DD143C7");
 
                 entity.ToTable("ChatBox");
 
@@ -150,7 +147,7 @@ namespace JobsWebServerBL.Models
             modelBuilder.Entity<JobApplication>(entity =>
             {
                 entity.HasKey(e => e.AppId)
-                    .HasName("PK__JobAppli__8E2CF7D9ABB48DC8");
+                    .HasName("PK__JobAppli__8E2CF7D9E3CE1D87");
 
                 entity.HasIndex(e => e.JobAppStatusId, "AppStatusIndex")
                     .IsUnique();
@@ -193,7 +190,7 @@ namespace JobsWebServerBL.Models
             modelBuilder.Entity<JobApplicationStatus>(entity =>
             {
                 entity.HasKey(e => e.StatusId)
-                    .HasName("PK__JobAppli__C8EE20433412B190");
+                    .HasName("PK__JobAppli__C8EE20430E12F523");
 
                 entity.ToTable("JobApplicationStatus");
 
@@ -210,31 +207,28 @@ namespace JobsWebServerBL.Models
 
             modelBuilder.Entity<JobOffer>(entity =>
             {
-                entity.HasIndex(e => e.EmployerId, "EmployerIDIndex")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.JobOfferStatusId, "JobOfferStatusIDIndex")
-                    .IsUnique();
-
-                entity.Property(e => e.JobOfferId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("JobOfferID");
+                entity.Property(e => e.JobOfferId).HasColumnName("JobOfferID");
 
                 entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
 
                 entity.Property(e => e.CommentId).HasColumnName("CommentID");
 
-                entity.Property(e => e.Content)
+                entity.Property(e => e.EmployerId).HasColumnName("EmployerID");
+
+                entity.Property(e => e.EndingDate).HasColumnType("datetime");
+
+                entity.Property(e => e.JobOfferDescription)
                     .IsRequired()
                     .HasColumnType("text");
-
-                entity.Property(e => e.EmployerId).HasColumnName("EmployerID");
 
                 entity.Property(e => e.JobOfferStatusId).HasColumnName("JobOfferStatusID");
 
-                entity.Property(e => e.Topic)
+                entity.Property(e => e.JobTitle)
                     .IsRequired()
-                    .HasColumnType("text");
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.StartingDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.JobOffers)
@@ -245,18 +239,17 @@ namespace JobsWebServerBL.Models
                 entity.HasOne(d => d.CommentNavigation)
                     .WithMany(p => p.JobOffers)
                     .HasForeignKey(d => d.CommentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("joboffers_commentid_foreign");
 
                 entity.HasOne(d => d.Employer)
-                    .WithOne(p => p.JobOffer)
-                    .HasForeignKey<JobOffer>(d => d.EmployerId)
+                    .WithMany(p => p.JobOffers)
+                    .HasForeignKey(d => d.EmployerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("joboffers_employerid_foreign");
 
                 entity.HasOne(d => d.JobOfferStatus)
-                    .WithOne(p => p.JobOffer)
-                    .HasForeignKey<JobOffer>(d => d.JobOfferStatusId)
+                    .WithMany(p => p.JobOffers)
+                    .HasForeignKey(d => d.JobOfferStatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("joboffer_jobofferstatusid_foreign");
             });
@@ -392,6 +385,11 @@ namespace JobsWebServerBL.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.PrivateAnswer)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Profession)
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);

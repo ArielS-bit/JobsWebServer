@@ -20,8 +20,19 @@ namespace JobsWebServerBL.Models
 
         public void AddUser(User u)
         {
-            //יש להוסיף את Gender, UserTypeID לפי בחירתם 
+             
             this.Users.Add(u);
+            this.SaveChanges();
+            if (u.UserTypeId == 1)
+            {
+                Employer e = new Employer() { UserId = u.UserId, EmployerId = u.UserId };
+                this.Employers.Add(e);
+            }
+            else
+            {
+                Employee e = new Employee() { UserId = u.UserId, EmployeeId = u.UserId, Employeed=false, RatingId=0};
+                this.Employees.Add(e);
+            }
             this.SaveChanges();
             
             

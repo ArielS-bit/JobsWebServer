@@ -10,15 +10,15 @@ namespace JobsWebServerBL.Models
         public Employer()
         {
             JobApplications = new HashSet<JobApplication>();
+            JobOffers = new HashSet<JobOffer>();
             JobRequests = new HashSet<JobRequest>();
         }
 
         public int EmployerId { get; set; }
         public int UserId { get; set; }
-        public bool IsEmployee { get; set; }
 
-        public virtual JobOffer JobOffer { get; set; }
         public virtual ICollection<JobApplication> JobApplications { get; set; }
+        public virtual ICollection<JobOffer> JobOffers { get; set; }
         public virtual ICollection<JobRequest> JobRequests { get; set; }
     }
 }

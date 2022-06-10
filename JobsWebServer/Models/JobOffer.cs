@@ -18,12 +18,14 @@ namespace JobsWebServer.Models
         public bool Applied { get; set; }
         public int NumApplied { get; set; }
         public string JobTitle { get; set; }
-        public int RequiredAge { get; set; }
-        public int RequiredEmployees { get; set; }
+        public int? RequiredAge { get; set; }
+        public int? RequiredEmployees { get; set; }
         public string JobOfferDescription { get; set; }
         public bool IsPrivate { get; set; }
         public int JobOfferStatusId { get; set; }
-        public int CommentId { get; set; }
+        public DateTime StartingDate { get; set; }
+        public DateTime EndingDate { get; set; }
+        public int? CommentId { get; set; }
 
         public virtual Category Category { get; set; }
         public virtual Comment CommentNavigation { get; set; }
