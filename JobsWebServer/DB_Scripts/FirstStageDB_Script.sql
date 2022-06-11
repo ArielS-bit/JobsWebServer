@@ -427,6 +427,36 @@ INSERT INTO [dbo].[JobOfferStatus]
 
 GO
 
+use IJobDB
+
+INSERT INTO [dbo].[JobApplicationStatus]
+           ([StatusName])
+     VALUES
+           ('Accepted')
+GO
+
+INSERT INTO [dbo].[JobApplicationStatus]
+           ([StatusName])
+     VALUES
+           ('Pending (employer answer)')
+GO
+
+INSERT INTO [dbo].[JobApplicationStatus]
+           ([StatusName])
+     VALUES
+           ('Pending (employee answer)')
+GO
+
+INSERT INTO [dbo].[JobApplicationStatus]
+           ([StatusName])
+     VALUES
+           ('Declined')
+GO
+
+
+
+
+
 
 
 
@@ -435,5 +465,5 @@ GO
 select * from Categories ORDER BY CategoryID
 
 select * from Users
-select * from JobOffers
+select * from JobApplicationStatus order by StatusID
 
