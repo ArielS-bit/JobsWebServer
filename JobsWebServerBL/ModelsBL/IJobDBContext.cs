@@ -51,7 +51,7 @@ namespace JobsWebServerBL.Models
 
         public List<JobOffer> GetJobOffersPerUser(int employerID)
         {
-            return this.JobOffers.Where(j => j.EmployerId == employerID).ToList<JobOffer>();
+            return this.JobOffers.Include(j=>j.Category).Where(j => j.EmployerId == employerID).ToList<JobOffer>();
         }
     }
 }
