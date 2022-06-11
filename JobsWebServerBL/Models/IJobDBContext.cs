@@ -57,7 +57,7 @@ namespace JobsWebServerBL.Models
             modelBuilder.Entity<ChatBox>(entity =>
             {
                 entity.HasKey(e => e.PhraseId)
-                    .HasName("PK__ChatBox__0DBA0EA25DD143C7");
+                    .HasName("PK__ChatBox__0DBA0EA25394699E");
 
                 entity.ToTable("ChatBox");
 
@@ -147,7 +147,7 @@ namespace JobsWebServerBL.Models
             modelBuilder.Entity<JobApplication>(entity =>
             {
                 entity.HasKey(e => e.AppId)
-                    .HasName("PK__JobAppli__8E2CF7D9E3CE1D87");
+                    .HasName("PK__JobAppli__8E2CF7D9F170D004");
 
                 entity.HasIndex(e => e.JobAppStatusId, "AppStatusIndex")
                     .IsUnique();
@@ -190,7 +190,7 @@ namespace JobsWebServerBL.Models
             modelBuilder.Entity<JobApplicationStatus>(entity =>
             {
                 entity.HasKey(e => e.StatusId)
-                    .HasName("PK__JobAppli__C8EE20430E12F523");
+                    .HasName("PK__JobAppli__C8EE20439C897BE8");
 
                 entity.ToTable("JobApplicationStatus");
 

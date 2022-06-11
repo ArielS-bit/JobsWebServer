@@ -204,6 +204,15 @@ namespace JobsWebServer.Controllers
 
         }
 
+        [Route("GetJobOfferEmployees")]
+        [HttpGet]
+        public List<JobOffer> GetJobOfferEmployees(int jobOfferID)
+        {
+
+            return context.GetJobOfferEmployees(jobOfferID);
+
+        }
+
 
 
 

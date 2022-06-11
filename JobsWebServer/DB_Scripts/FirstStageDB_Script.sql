@@ -137,6 +137,7 @@ CREATE TABLE Users(
     Pass VARCHAR(255) NOT NULL,
     Nickname VARCHAR(255) NOT NULL,
     Birthday DATE NOT NULL,
+	Age INT NOT NULL,
     Gender VARCHAR(255) NOT NULL,
     UserTypeID INT NOT NULL,
 	Profession VARCHAR(255) NOT NULL,
@@ -271,6 +272,7 @@ INSERT INTO [dbo].[Users]
            ,[Pass]
            ,[Nickname]
            ,[Birthday]
+		   ,[Age]
            ,[Gender]
            ,[UserTypeID]
 		   ,[Profession]
@@ -282,6 +284,7 @@ INSERT INTO [dbo].[Users]
            '12',
            'Luc1',
            '2016/08/27 21:02:44',
+		   '8',
            'Male',
            '2',
 		    'Dog-Walker',
@@ -295,6 +298,7 @@ INSERT INTO [dbo].[Users]
            ,[Pass]
            ,[Nickname]
            ,[Birthday]
+		   ,[Age]
            ,[Gender]
            ,[UserTypeID]
 		   ,[Profession]
@@ -306,6 +310,7 @@ INSERT INTO [dbo].[Users]
            'steve12',
            'AppleFounder',
            '1955/02/24 21:02:44',
+		   '10',
            'Male',
            '1',
 		    'Dog-Walker',
@@ -324,6 +329,7 @@ INSERT INTO [dbo].[Users]
            ,[Pass]
            ,[Nickname]
            ,[Birthday]
+		   ,[Age]
            ,[Gender]
            ,[UserTypeID]
 		   ,[Profession]
@@ -335,6 +341,7 @@ INSERT INTO [dbo].[Users]
            ,'123'
            ,'Admin'
            ,'2000-5-11'
+		   ,'18'
            ,'Male'
            ,1
 		   ,'Dog-Walker'
@@ -464,6 +471,6 @@ GO
 
 select * from Categories ORDER BY CategoryID
 
-select * from Users
+select * from JobOffers
 select * from JobApplicationStatus order by StatusID
 
