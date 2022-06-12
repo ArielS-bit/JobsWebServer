@@ -54,7 +54,18 @@ namespace JobsWebServerBL.Models
             return this.JobOffers.Include(j=>j.Category).Where(j => j.EmployerId == employerID).ToList<JobOffer>();
         }
 
-        
+        public void EditUser(User u)
+        {
+            //User user = this.Users.Where(u1 => u1.UserId == u.UserId).FirstOrDefault();
+            //user.FirstName = u.FirstName;
+            //user.LastName = u.LastName;
+            //user.Pass = u.Pass;
+
+            this.Users.Update(u);
+            this.SaveChanges();
+        }
+
+
 
         //public List<Employee> GetJobOfferEmployees(int jobOfferID)
         //{

@@ -106,6 +106,25 @@ namespace JobsWebServer.Controllers
             }
         }
 
+        
+        [Route("EditProfile")]
+        [HttpPost]
+        public bool EditProfile([FromBody] User user)
+        {
+
+            if (user == null)
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
+                return false;
+            }
+
+            this.context.EditUser(user);
+            HttpContext.Session.SetObject("theUser", user);
+            Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+            return true;
+
+        }
+
         [Route("SignUp")]
         [HttpPost]
         public User SignUp([FromBody] User user)
@@ -203,6 +222,8 @@ namespace JobsWebServer.Controllers
             return context.GetJobOffersPerUser(employerID);
 
         }
+
+
 
         [Route("GetJobOfferEmployees")]
         [HttpGet]
