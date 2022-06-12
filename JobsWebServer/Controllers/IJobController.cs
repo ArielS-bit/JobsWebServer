@@ -223,6 +223,13 @@ namespace JobsWebServer.Controllers
 
         }
 
+        [Route("IsEmployer")]
+        [HttpGet]
+        public bool IsEmployer([FromQuery] int userID)
+        {
+            return this.context.IsEmployer(userID);
+        }
+
 
 
         [Route("GetJobOfferEmployees")]

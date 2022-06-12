@@ -65,6 +65,16 @@ namespace JobsWebServerBL.Models
             this.SaveChanges();
         }
 
+        public bool IsEmployer(int userID)
+        {
+            Employer employer = this.Employers.Where(e => e.UserId == userID).FirstOrDefault();
+            if (employer==null)
+            {
+                return false;
+            }
+            return true;
+        }
+
 
 
         //public List<Employee> GetJobOfferEmployees(int jobOfferID)
