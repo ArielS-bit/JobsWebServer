@@ -30,7 +30,7 @@ namespace JobsWebServerBL.Models
             }
             else
             {
-                Employee e = new Employee() { UserId = u.UserId, EmployeeId = u.UserId, Employeed=false, RatingId=0};
+                Employee e = new Employee() { UserId = u.UserId, Employeed=false, RatingId=1};
                 this.Employees.Add(e);
             }
             this.SaveChanges();
@@ -56,11 +56,11 @@ namespace JobsWebServerBL.Models
 
         
 
-        public List<Employee> GetJobOfferEmployees(int jobOfferID)
-        {
-            List<JobApplication> jobApps= this.JobApplications.Where(j => j.JobOfferId == jobOfferID).ToList<JobApplication>();
-            //return this.Employees.Include(e=>e.EmployeeId).Where(e=>e.EmployeeId==jobApps.)
-            //return this.Where(j => j.EmployerId == employerID).ToList<JobOffer>();
-        }
+        //public List<Employee> GetJobOfferEmployees(int jobOfferID)
+        //{
+        //    List<JobApplication> jobApps= this.JobApplications.Where(j => j.JobOfferId == jobOfferID).ToList<JobApplication>();
+        //    //return this.Employees.Include(e=>e.EmployeeId).Where(e=>e.EmployeeId==jobApps.)
+        //    //return this.Where(j => j.EmployerId == employerID).ToList<JobOffer>();
+        //}
     }
 }

@@ -206,12 +206,12 @@ namespace JobsWebServer.Controllers
 
         [Route("GetJobOfferEmployees")]
         [HttpGet]
-        public List<JobOffer> GetJobOfferEmployees(int jobOfferID)
-        {
+        //public List<JobOffer> GetJobOfferEmployees(int jobOfferID)
+        //{
 
-            return context.GetJobOfferEmployees(jobOfferID);
+        //    //return context.GetJobOfferEmployees(jobOfferID);
 
-        }
+        //}
 
 
 
