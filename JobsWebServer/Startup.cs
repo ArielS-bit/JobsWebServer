@@ -75,8 +75,22 @@ namespace JobsWebServer
                         await next();
                     }
 
-            }); 
-             
+            });
+
+            app.Use(async (context, next) =>
+            {
+                await next();
+                if (context.Response.StatusCode == (int)System.Net.HttpStatusCode.NotFound &&
+                context.Request.Path.Value.Contains("jpg"))
+                {
+                    if (context.Request.Path.Value.Contains("ProfileImages"))
+                        context.Request.Path = new PathString(@"/ProfileImages/defualtProfile.png");
+                    else
+                        context.Request.Path = new PathString(@"/JobOfferImages/defualt.png");
+                    await next();
+                }
+                
+            });
 
             app.UseStaticFiles(); //Added to have the wwwroot folder and server to accept calls to static files
             app.UseRouting();
